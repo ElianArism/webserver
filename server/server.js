@@ -15,10 +15,6 @@ app.get('/user', (req, res) => {
     res.json('get usuario');
 });
 
-app.get('/', (req, res) => {
-    res.render(__dirname + '/views/index.html');
-})
-
 app.post('/user', (req, res) => {
     let body = req.body; //this is what will appear when the bodyparser processes what it receives from requests
 
