@@ -16,7 +16,7 @@ app.get('/user', (req, res) => {
 });
 
 app.get('/', (req, res) => {
-    res.render('./views/index.html');
+    res.render(__dirname + '/views/index.html');
 })
 
 app.post('/user', (req, res) => {
