@@ -1,7 +1,9 @@
 require('./config/config');
 const express = require('express');
+const mongoose = require('mongoose');
 const app = express();
 const bodyParser = require('body-parser');
+
 
 
 // parse application/x-www-form-urlencoded --- This is just a middleware
@@ -11,33 +13,17 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 
-app.get('/user', (req, res) => {
-    res.json('get usuario');
-});
 
-app.post('/user', (req, res) => {
-    let body = req.body; //this is what will appear when the bodyparser processes what it receives from requests
+app.use(require('./routes/user'));
 
-    if (body.nombre === undefined) {
-        res.status(400).json({
-            ok: false,
-            msj: 'Name is necessary'
-        }); //catch 400 error (bad request)
-    } else {
-        res.json({
-            person: body //equals body: body
-        });
-    }
-});
-app.put('/user/:id', (req, res) => {
-    let id = req.params.id; //get param id from url
-
-    res.json({
-        id // equals id: id
-    });
-});
-app.delete('/user', (req, res) => {
-    res.json('delete usuario');
+mongoose.connect(process.env.URLDB, {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useFindAndModify: true
+}, (err, res) => {
+    if (err) throw err;
+    console.log(`Database connected`);
 });
 
 app.listen(process.env.PORT, () => {
